@@ -1,0 +1,34 @@
+.restaurant-card {
+  flex: 1 1 calc(33.333% - 16px);
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.restaurant-card mat-card-content {
+  flex-grow: 1; /* Pushes the button to the bottom */
+}
+
+.restaurant-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.restaurant-cards-container .restaurant-card:nth-child(4n + 1) {
+  margin-left: 130px;
+}
+
+.restaurant-card img {
+  margin-bottom: 16px;
+}
+
+.restaurant-card button {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.restaurant-card button:hover {
+  background-color: white;
+  color: #3f51b5;
+}

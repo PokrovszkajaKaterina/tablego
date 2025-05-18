@@ -1,0 +1,37 @@
+<div mat-dialog-content class="dialog-container"
+     style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+  <h1 mat-dialog-title>Nyitvatartási idő módosítása - {{ data.restaurant.name }}</h1>
+  <form [formGroup]="openingHoursForm" (ngSubmit)="saveOpeningHours()">
+    <div *ngFor="let day of days" class="day-row">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <h3>{{ day.label }}</h3>
+        <button mat-button type="button" color="primary" (click)="addInterval(day.key)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div [formArrayName]="day.key">
+        <div *ngFor="let group of getIntervals(day.key).controls; let i = index" [formGroupName]="i"
+             style="display: flex; gap: 8px; align-items: center; margin-bottom: 16px;">
+
+          <mat-form-field appearance="fill" style="width: 150px;">
+            <mat-label>Nyitás</mat-label>
+            <input matInput type="time" formControlName="open" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" style="width: 150px;">
+            <mat-label>Zárás</mat-label>
+            <input matInput type="time" formControlName="close" required>
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" (click)="removeInterval(day.key, i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Mégsem</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="openingHoursForm.invalid">Mentés</button>
+    </div>
+  </form>
+</div>

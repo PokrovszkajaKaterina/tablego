@@ -1,0 +1,116 @@
+[
+  {
+    "name": "Élesztőház",
+    "address": " Budapest,Tűzoltó u. 22",
+    "phone": "+36 1 123 4567",
+    "email": "elesztohaz@teszt.hu",
+    "description": "Az első független kézműves söröző és gasztronómiai sétálóutca, 30 sörcsappal.",
+    "about" : "",
+    "maxCapacity": 100,
+    "openingHours": {
+      "monday":    { "open": "11:00", "close": "22:00" },
+      "tuesday":   { "open": "11:00", "close": "22:00" },
+      "wednesday": { "open": "11:00", "close": "22:00" },
+      "thursday":  { "open": "11:00", "close": "22:00" },
+      "friday":    { "open": "11:00", "close": "23:30" },
+      "saturday":  { "open": "12:00", "close": "23:30" },
+      "sunday":    { "open": "12:00", "close": "21:00" }
+    }
+  },
+  {
+    "name": "PartON Bistro",
+    "address": "Zamárdi, Balaton szíve tér",
+    "phone": "+36 1 987 6543",
+    "email": "parton.bistro@teszt.hu",
+    "description": "Mediterrán hangulatú étterem egy karnyújtásnyira a Balatontól.",
+    "about": "A Balaton déli partjának közepén, Balatonszemesen várjuk egész évben kedves Vendégeinket! Közel 30 éves működésünk alatt fontos szempont a régiónk szeretete, melyet az ételeinken és a borokon keresztül szeretnénk bemutatni. Elengedhetetlen számunkra a helyi hagyományok és alapanyagok tiszteletben tartása, hiszen ezekből a gyökerekből táplálkozunk, de a kor kívánalmairól sem szeretnénk megfeledkezni, és e kettő ötvözeteként új csomagolásban tálalni a megszokott ízeket – ez lett az egyik célunk.",
+    "maxCapacity": 50,
+    "openingHours": {
+      "monday":    { "open": "10:00", "close": "22:00" },
+      "tuesday":   { "open": "10:00", "close": "22:00" },
+      "wednesday": { "open": "10:00", "close": "22:00" },
+      "thursday":  { "open": "10:00", "close": "22:00" },
+      "friday":    { "open": "10:00", "close": "23:30" },
+      "saturday":  { "open": "12:00", "close": "23:30" },
+      "sunday":    { "open": "12:00", "close": "21:00" }
+    }
+  },
+  {
+    "name": "Kistücsök Étterem Food&Room",
+    "address": "Balatonszemes,Bajcsy-Zsilinszky út 25",
+    "phone": "+36 1 987 6543",
+    "email": "kistucsok@teszt.hu",
+    "description": "A hagyomány szeretete a jövő szeretetét is magában hordozza.",
+    "about": "Mediterrán hangulatú étterem egy karnyújtásnyira a Balatontól, ahol egész évben válogathattok szezonálisan frissülő étlapunkról.",
+    "maxCapacity": 40,
+    "openingHours": {
+      "monday":    { "open": "12:00", "close": "22:00" },
+      "tuesday":   { "open": "12:00", "close": "22:00" },
+      "wednesday": { "open": "12:00", "close": "22:00" },
+      "thursday":  { "open": "12:00", "close": "22:00" },
+      "friday":    { "open": "12:00", "close": "22:00" },
+      "saturday":  { "open": "12:00", "close": "22:00" },
+      "sunday":    { "open": "12:00", "close": "22:00" }
+    }
+  },
+  {
+    "name": "Japanika Sushi Bár",
+    "address": "Budapest,Szent István tér 11",
+    "phone": "+36 1 987 6543",
+    "email": "japanika@teszt.hu",
+    "description": "A hagyomány szeretete a jövő szeretetét is magában hordozza.",
+    "about": "A Japanika története 2004 telén kezdődött Tel -Avivban, amikor egy fiatal pár megkezdte első sushi bárját az egész várost átszelő Dizengoff úton. Az évek során a Japanika gyorsétterem lánccá nőtte ki magát, amely Izrael egész területén jelen volt, és 2016-ban sikerült átlépnie Európa határát is. Első európai éttermüket Budapest szívében, a Bazilika közelében nyitották meg, amely az ázsiai hagyományos konyhát a fővárosaink stílusával és dinamikájával keveri, mindig szem előtt tartva a Japanika fő elveit: friss anyagok, minőségi ételek, tiszta dizájn, elérhető/korrekt árak. A Japanika megnyitását 4 éves felkészülés előzte meg. Az étterem vezetője, aki eredetileg környezettudományi diplomával, és több mint 10 éves vendéglátói tapasztalattal rendelkezik, Somogyi Kinga megismerkedett a távol -keleti konyhával és a Japanika éttermeivel Japánban és Izraelben, miközben ezekben az országokban tanult. A vezetőség is igyekezett nagyon sokszínű lenni, miközben a Budapesti Japanika 20 alkalmazottját toborozták, és a végeredmény egy multinacionális, magasan képzett, ugyanakkor nagyon nyitott és közvetlen csapat lett. A Japanika menüje ugyanolyan színes, mint a csapat: az európai emberek ízlésére készített sushi mellett thai tésztákat, leveseket, grillételeket, keleti egyedi alapanyagokból és hagyományos japán italokból készült koktélokat, valamint finom desszertek kínál, jó zenével és tágas terasszal, amely a hét minden napján nyitva tart. Déltől 15: 00-ig háromfogásos üzleti ebédet is kínálunk, amely nagyon különleges a déli menükben: több mint 30 fogás közül választhat magának sokkal olcsóbban, mint akárhol a környéken. A Japanika több, mint étterem: találkozóhely, hangulatos légkör, egy lakályos bár, amely otthont ad az éjszakai kalandoroknak is. Változatos programok, ételek széles választéka, tematikus hetek vagy éjszakák, élő zene, DJ-ék -egy olyan hely, amely minden ember szívéhez talál utat!",
+    "maxCapacity": 50,
+    "openingHours": {
+      "monday":    { "open": "12:00", "close": "00:00" },
+      "tuesday":   { "open": "12:00", "close": "00:00" },
+      "wednesday": { "open": "12:00", "close": "00:00" },
+      "thursday":  { "open": "12:00", "close": "00:00" },
+      "friday":    { "open": "12:00", "close": "00:00" },
+      "saturday":  { "open": "12:00", "close": "00:00" },
+      "sunday":    { "open": "12:00", "close": "00:00" }
+    }
+  },
+  {
+    "name": "Almavirág étterem",
+    "address": "Derecske,Külterület 47. sz. főút",
+    "phone": "+36 1 987 6543",
+    "email": "almavirag@teszt.hu",
+    "description": "Egyedülálló gasztroélmények a Hajdúságban.Helyi termelőktől kapott minőségi alapanyagokból készítjük ételeinket, a legmodernebb környezetben.",
+    "about": "Annak érdekében, hogy egészen biztosan találj helyet nálunk, kérjük, lehetőség szerint foglalj asztalt előre. ASZTALFOGLALÁS: +36 1 987 6543 Derecske a javából – az étterem, ahol csak minőségi alapanyagokból készült, ízletes fogások kerülnek az asztalra, legyen szó glutén- vagy laktózmentes ételekről! Megálmodtuk, megnyitottuk! Egyedi ízvilágú étterem a Derecskei Gyümölcsös lombos fái között, ahol helyi termelők gondosan válogatott alapanyagaiból készült ételek kerülnek az asztalra. Mosolyt csalunk az arcodra kedvenc vidéki ízeiddel, mert tudjuk, milyen finom is nagymama cvekedlije, de hiszünk abban is, hogy egy kis újdonság sosem árt, ezért a hagyományos ízeket modern konyhához méltó, újragondolt formában készítjük el. Nálunk különleges ízek várnak, melyekben benne van a gondos gazdák keze munkája és tudásuk legjava, mesterséges adalékoknak viszont nincs helye az asztalon! Ha nem hiszed, légy a vendégünk, és kóstolj bele te is Derecske legjavába!",
+    "maxCapacity": 70,
+    "openingHours": {
+      "monday":    { "open": "12:00", "close": "00:00" },
+      "tuesday":   { "open": "12:00", "close": "00:00" },
+      "wednesday": { "open": "12:00", "close": "00:00" },
+      "thursday":  { "open": "12:00", "close": "00:00" },
+      "friday":    { "open": "12:00", "close": "00:00" },
+      "saturday":  { "open": "12:00", "close": "00:00" },
+      "sunday":    { "open": "12:00", "close": "00:00" }
+    }
+  },
+  {
+    "name": "Pizzabar Pomo D'oro",
+    "address": "Budapest,Arany jános utca 9",
+    "phone": "+36 1 987 6543",
+    "email": "pomo.doro@teszt.hu",
+    "description": "Olasz Gastro. Pizza. Bar",
+    "about": "Itt vagyunk a régi gasztronómia Pomo D’oro helyén, a Trattoria Pomo D’oro mellett, a neve Pizzabar Pomo D’oro. De miért Pizzabar Pomo D’oro? Mert ezen a helyen meg szeretnénk mutatni A PIZZÁT! Nem is csak a nápolyi pizzát, hanem Olaszország összes pizzáját. Utazz el velünk, és megmutatjuk, hogy milyen gasztro kultúrával rendelkezik Olaszország.\n\nHa itt vagy, a tévéken folyamatosan sporteseményeket nézhetsz, amit itt tapasztalni fogsz az minden, ami minket életben tart. Szóval fociról sokat fogsz hallani, természetesen sokat fogunk szurkolni együtt és ha nyerünk, akkor tudunk ünnepelni és koccintani tradicionális olasz italokkal.\n\nA gyönyörű bárunk, tipikus olasz bár, ahol olasz italok, koktélok és minden más, ami az olaszokat híressé tette a világban megtalálható.\n\nVárunk titeket itt a Pizzabar Pomo D’oro-ban",
+    "maxCapacity": 30,
+    "openingHours": {
+      "monday":    { "open": "", "close": "" },
+      "tuesday":   { "open": "12:00", "close": "22:00" },
+      "wednesday": { "open": "12:00", "close": "22:00" },
+      "thursday":  { "open": "12:00", "close": "23:00" },
+      "friday":    { "open": "12:00", "close": "23:00" },
+      "saturday":  [
+        { "open": "12:00", "close": "16:00" },
+        { "open": "18:00", "close": "22:00" }
+      ],
+      "sunday": [
+        { "open": "12:00", "close": "16:00" },
+        { "open": "18:00", "close": "22:00" }
+      ]
+    }
+  }
+]

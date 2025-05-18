@@ -1,0 +1,100 @@
+<h1>Éttermek</h1>
+<div class="add-restaurant">
+  <button mat-raised-button color="primary" (click)="openAddRestaurantDialog()">
+    <mat-icon>add</mat-icon>
+    Új étterem hozzáadása
+  </button>
+</div>
+
+<mat-table [dataSource]="restaurants" matSort>
+
+  <ng-container>
+    <td mat-cell *matCellDef="let element;">
+      <input [(ngModel)]="element._id" hidden />
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Étterem neve</mat-header-cell>
+    <mat-cell *matCellDef="let restaurant; let i = index">
+      <ng-container *ngIf="editingRowIndex === i; else displayName">
+        <input [(ngModel)]="restaurant.name" />
+      </ng-container>
+      <ng-template #displayName>
+        {{ restaurant.name }}
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="address">
+    <mat-header-cell *matHeaderCellDef>Cím</mat-header-cell>
+    <mat-cell *matCellDef="let restaurant; let i = index">
+      <ng-container *ngIf="editingRowIndex === i; else displayAddress">
+        <input [(ngModel)]="restaurant.address" />
+      </ng-container>
+      <ng-template #displayAddress>
+        {{ restaurant.address }}
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>E-mail</mat-header-cell>
+    <mat-cell *matCellDef="let restaurant; let i = index">
+      <ng-container *ngIf="editingRowIndex === i; else displayEmail">
+        <input [(ngModel)]="restaurant.email" />
+      </ng-container>
+      <ng-template #displayEmail>
+        {{ restaurant.email }}
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="phone">
+    <mat-header-cell *matHeaderCellDef>Telefonszám</mat-header-cell>
+    <mat-cell *matCellDef="let restaurant; let i = index">
+      <ng-container *ngIf="editingRowIndex === i; else displayPhone">
+        <input [(ngModel)]="restaurant.phone" />
+      </ng-container>
+      <ng-template #displayPhone>
+        {{ restaurant.phone }}
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="maxCapacity">
+    <mat-header-cell *matHeaderCellDef>Maximum létszám</mat-header-cell>
+    <mat-cell *matCellDef="let restaurant; let i = index">
+      <ng-container *ngIf="editingRowIndex === i; else maxCapacityDisplay">
+        <input type="number" [(ngModel)]="restaurant.maxCapacity" min="0"/>
+      </ng-container>
+      <ng-template #maxCapacityDisplay>
+        {{ restaurant.maxCapacity }}
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Műveletek </mat-header-cell>
+    <mat-cell *matCellDef="let restaurant; let i = index">
+      <button mat-icon-button matTooltip="Adatok módosítása" (click)="startEdit(i)" *ngIf="editingRowIndex !== i">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Mégsem" (click)="cancelEdit()" *ngIf="editingRowIndex === i">
+        <mat-icon>cancel</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Mentés" (click)="saveRestaurant(restaurant, i)" *ngIf="editingRowIndex === i">
+        <mat-icon color="primary">save</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Nyitvatartás módosítása" (click)="openOpeningHoursDialog(restaurant)" *ngIf="editingRowIndex !== i">
+        <mat-icon>schedule</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Törlés" (click)="deleteRestaurant(restaurant._id, i)">
+        <mat-icon color="warn">delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+</mat-table>
+

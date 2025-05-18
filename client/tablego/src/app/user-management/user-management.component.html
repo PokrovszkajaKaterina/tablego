@@ -1,0 +1,77 @@
+<div class="table-container" *ngIf="users && users.length; else noUsersTemplate">
+  <h1>Vendégek</h1>
+  <table mat-table [dataSource]="users">
+
+    <ng-container>
+      <td mat-cell *matCellDef="let element; let i = index">
+       <input [(ngModel)]="element._id" hidden />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Teljes név</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="editingRowIndex === i; else nameText">
+          <input [(ngModel)]="element.name" />
+        </ng-container>
+        <ng-template #nameText>{{ element.name }}</ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nickname">
+      <th mat-header-cell *matHeaderCellDef>Becenév</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="editingRowIndex === i; else nicknameText">
+          <input [(ngModel)]="element.nickname" />
+        </ng-container>
+        <ng-template #nicknameText>{{ element.nickname }}</ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Cím</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="editingRowIndex === i; else addressText">
+          <input [(ngModel)]="element.address" />
+        </ng-container>
+        <ng-template #addressText>{{ element.address }}</ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <ng-container *ngIf="editingRowIndex === i; else emailText">
+          <input [(ngModel)]="element.email" />
+        </ng-container>
+        <ng-template #emailText>{{ element.email }}</ng-template>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Műveletek</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <button mat-icon-button matTooltip="Szerkesztés" (click)="startEdit(i)" *ngIf="editingRowIndex !== i">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Mégsem" (click)="cancelEdit()" *ngIf="editingRowIndex === i">
+          <mat-icon>cancel</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Mentés" (click)="saveUser(element, i)" *ngIf="editingRowIndex === i">
+          <mat-icon color="primary">save</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Törlés" (click)="deleteUser(element._id, i)">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns" [hidden]="row.role === 'admin'">></tr>
+  </table>
+</div>
+
+<ng-template #noUsersTemplate>
+  <p>Jelenleg nincsnek elérhető felhasználók!</p>
+</ng-template>

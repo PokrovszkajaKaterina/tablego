@@ -1,0 +1,23 @@
+<div style="margin-top: 150px;" class="restaurant-cards-container" *ngIf="restaurants && restaurants.length; else noRestaurantsTemplate">
+  <mat-card class="restaurant-card" appearance="outlined" *ngFor="let restaurant of restaurants">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon aria-hidden="false" aria-label="Restaurant icon" fontIcon="dining"></mat-icon>
+      </div>
+      <mat-card-title>{{ restaurant.name }}</mat-card-title>
+    </mat-card-header>
+    <img [routerLink]="['/restaurant-info', restaurant._id]" src="../../../assets/images/default.jpg" alt="{{restaurant.name}}">
+    <mat-card-content>
+      <p>
+        {{ restaurant.description }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="openReservationDialog(restaurant)">Asztalfoglalás</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<ng-template #noRestaurantsTemplate>
+  <p>Jelenleg nincs elérhető étterem!</p>
+</ng-template>

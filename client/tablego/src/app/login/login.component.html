@@ -1,0 +1,19 @@
+<div class="login-container">
+  <form class="login-form" (ngSubmit)="login()">
+    <h2>Bejelentkezés</h2>
+    <div *ngIf="errorMessage" style="color: red;">
+      <p>{{ errorMessage }}</p>
+    </div>
+    <label for="email" class="form-label">Email</label>
+    <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required class="form-control"/>
+    <label for="password" class="form-label">Jelszó</label>
+    <input [(ngModel)]="password" name="password" type="password" placeholder="Jelszó" required class="form-control"/>
+    <div class="buttons">
+      <button type="submit">Bejelentkezés</button>
+      <button type="button" (click)="navigate('/signup')">Regisztráció</button>
+    </div>
+    <div class="overlay" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </form>
+</div>

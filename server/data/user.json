@@ -1,0 +1,50 @@
+[
+  {
+    "email": "alice@example.com",
+    "password": "hashed_pw_123",
+    "name": "Alice Smith",
+    "address": "123 Apple St, Wonderland",
+    "nickname": "Ally",
+    "role": "user"
+  },
+  {
+    "email": "bob@example.com",
+    "password": "hashed_pw_456",
+    "name": "Bob Johnson",
+    "address": "456 Orange Ave, Nowhere",
+    "nickname": "Bobby",
+    "role": "user"
+  },
+  {
+    "email": "carol@example.com",
+    "password": "hashed_pw_789",
+    "name": "Carol Lee",
+    "address": "789 Grape Rd, Somewhere",
+    "nickname": "Caz",
+    "role": "user"
+  },
+  {
+    "email": "dan@example.com",
+    "password": "hashed_pw_abc",
+    "name": "Dan Brown",
+    "address": "321 Banana Blvd, Everywhere",
+    "nickname": "Danny",
+    "role": "user"
+  },
+  {
+    "email": "eve@example.com",
+    "password": "hashed_pw_def",
+    "name": "Eve Davis",
+    "address": "654 Mango Ln, Elsewhere",
+    "nickname": "Evie",
+    "role": "user"
+  },
+  {
+    "email": "admin@admin.com",
+    "password": "admin",
+    "name": "Admin",
+    "address": "Admin St, Admin City",
+    "nickname": "Adminka",
+    "role": "admin"
+  }
+]

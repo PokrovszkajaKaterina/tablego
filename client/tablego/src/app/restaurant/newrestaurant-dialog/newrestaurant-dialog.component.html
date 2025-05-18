@@ -1,0 +1,40 @@
+<div mat-dialog-content class="dialog-container"
+     style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+  <h1 mat-dialog-title>Új étterem hozzáadása</h1>
+  <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()">
+    <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+      <mat-form-field appearance="fill">
+        <mat-label>Név</mat-label>
+        <input matInput formControlName="name" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Cím</mat-label>
+        <input matInput formControlName="address" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Telefon</mat-label>
+        <input matInput formControlName="phone" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Rövid leírás</mat-label>
+        <input matInput formControlName="description" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Bemutatkozás</mat-label>
+        <input matInput formControlName="about" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Maximális férőhely</mat-label>
+        <input matInput type="number" formControlName="maxCapacity" min="0">
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Mégsem</button>
+      <button mat-raised-button color="primary" type="submit">Mentés</button>
+    </div>
+  </form>
+</div>

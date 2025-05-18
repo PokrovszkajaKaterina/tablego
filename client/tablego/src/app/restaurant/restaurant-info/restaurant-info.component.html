@@ -1,0 +1,74 @@
+<div *ngIf="restaurantId && restaurant; else noRestaurantTemplate"
+     style="margin-top: 150px; display: flex; flex-direction: column; align-items: center;">
+  <div
+    style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; margin-bottom: 16px; width: 100%; max-width: 500px;">
+    <h1>
+      <mat-icon aria-hidden="false" aria-label="Restaurant icon" fontIcon="dining"></mat-icon>
+      {{ restaurant.name }}
+    </h1>
+    <p><em>{{ restaurant.description }}</em></p>
+    <mat-divider></mat-divider>
+    <div style="margin-bottom: 12px;"></div>
+    <p>
+      <mat-icon>location_on</mat-icon>
+      {{ restaurant.address }}
+    </p>
+    <p>
+      <mat-icon>phone</mat-icon>
+      {{ restaurant.phone }}
+    </p>
+    <p>
+      <mat-icon>email</mat-icon>
+      {{ restaurant.email }}
+    </p>
+  </div>
+  <div
+    style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; width: 100%; max-width: 500px; margin-bottom: 16px;">
+    <h2>
+      <mat-icon>info</mat-icon>
+      Bemutatkozás
+    </h2>
+    <mat-divider></mat-divider>
+    <div style="margin-bottom: 12px;"></div>
+    <p>{{ restaurant.about }}</p>
+  </div>
+  <div style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; width: 100%; max-width: 500px;">
+    <h2>
+      <mat-icon>schedule</mat-icon>
+      Nyitvatartás
+    </h2>
+    <mat-divider></mat-divider>
+    <ul>
+      <li *ngFor="let entry of getSortedOpeningHours(restaurant.openingHours)">
+        <strong>{{ translateDay(entry.key) | titlecase }}:</strong>
+
+        <!-- If it's an array -->
+        <ng-container *ngIf="isArray(entry.value); else singleEntry">
+          <ng-container *ngIf="hasValidTimeArray(entry.value); else closed">
+            <div *ngFor="let time of asArray(entry.value)">
+              <ng-container *ngIf="time?.open && time?.close; else skip">
+                {{ time.open }} - {{ time.close }}
+              </ng-container>
+              <ng-template #skip></ng-template>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <!-- If it's a single object -->
+        <ng-template #singleEntry>
+          <ng-container *ngIf="entry.value?.open && entry.value?.close; else closed">
+            {{ entry.value.open }} - {{ entry.value.close }}
+          </ng-container>
+        </ng-template>
+
+        <ng-template #closed>
+          <div>Zárva</div>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<ng-template #noRestaurantTemplate>
+  <p>Nem sikerült lekérni az étterem adatait!</p>
+</ng-template>

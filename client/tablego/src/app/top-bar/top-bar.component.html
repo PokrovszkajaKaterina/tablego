@@ -1,0 +1,39 @@
+<mat-toolbar color="primary" class="fixed">
+  <div class="redirect-link" (click)="navigateToHome()">
+    <mat-icon>bolt</mat-icon>
+    <span>TableGo</span>
+  </div>
+  <span class="spacer"></span>
+  <ng-container *ngIf="!isLoggedIn()">
+    <button mat-button routerLink="/login" style="margin-right: 8px;">
+      <mat-icon>login</mat-icon>
+      Bejelentkezés
+    </button>
+  </ng-container>
+  <ng-container *ngIf="isAdmin()">
+    <button mat-button routerLink="/user-management" style="margin-right: 8px;">
+      <mat-icon>manage_accounts</mat-icon>
+      Felhasználók kezelése
+    </button>
+    <button mat-button routerLink="/restaurant-management" style="margin-right: 8px;">
+      <mat-icon>menu_book</mat-icon>
+      Éttermek kezelése
+    </button>
+    <button mat-button routerLink="/reservation-management" style="margin-right: 8px;">
+      <mat-icon>event</mat-icon>
+      Foglalások kezelése
+    </button>
+  </ng-container>
+  <ng-container *ngIf="isLoggedIn() && !isAdmin()">
+    <button mat-button routerLink="/reservation-list">
+      <mat-icon>event_upcoming</mat-icon>
+      Foglalásaim
+    </button>
+  </ng-container>
+  <ng-container *ngIf="isLoggedIn()">
+    <button class="logout" mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Kijelentkezés
+    </button>
+  </ng-container>
+</mat-toolbar>
