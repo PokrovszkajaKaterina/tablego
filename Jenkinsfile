@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                dir('client') {  // If your React app is in a subfolder
+                dir('client/tablego') {
                     sh 'npm install'
                 }
             }
