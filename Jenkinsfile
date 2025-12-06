@@ -37,6 +37,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Test') {
+            steps {
+                dir('client/tablego') {
+                    sh '''
+                        echo "Deploying to test environment..."
+                        # Copy built files to nginx container
+                        docker cp dist/my-first-project/. tablego-test:/usr/share/nginx/html/
+                        echo "Deployment complete!"
+                    '''
+                }
+            }
+        }
     }
 
     post {
