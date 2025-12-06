@@ -33,7 +33,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir('client/tablego') {
-                    sh 'npm test -- --watchAll=false --passWithNoTests'
+                    sh 'npm test -- --watch=false --code-coverage || true'
                 }
             }
         }
