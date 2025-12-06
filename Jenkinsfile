@@ -16,7 +16,7 @@ pipeline {
 
         stage('Lint') {
             steps {
-                dir('client') {
+                dir('client/tablego') {
                     sh 'npm run lint || true'
                 }
             }
@@ -24,7 +24,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('client') {
+                dir('client/tablego') {
                     sh 'npm run build'
                 }
             }
@@ -32,7 +32,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('client') {
+                dir('client/tablego') {
                     sh 'npm test -- --watchAll=false --passWithNoTests'
                 }
             }
