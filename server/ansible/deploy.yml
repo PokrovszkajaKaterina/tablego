@@ -9,9 +9,12 @@
     nginx_container: tablego-test
     source_dir: "{{ playbook_dir }}/../../client/tablego/dist/my-first-project/browser"
     nginx_config: "{{ playbook_dir }}/../nginx.conf"
-    deploy_timestamp: "{{ ansible_date_time.iso8601 }}"
 
   tasks:
+    - name: Get current timestamp
+      set_fact:
+        deploy_timestamp: "{{ ansible_date_time.iso8601 }}"
+
     - name: Display deployment information
       debug:
         msg: "Deploying {{ app_name }} at {{ deploy_timestamp }}"
@@ -38,21 +41,9 @@
     - name: Reload nginx to apply new configuration
       shell: docker exec {{ nginx_container }} nginx -s reload
 
-    - name: Wait for application to be ready
-      pause:
-        seconds: 3
-
-    - name: Verify application is accessible
-      uri:
-        url: http://localhost:8081
-        status_code: 200
-        timeout: 10
-      register: health_check
-
     - name: Display deployment success message
       debug:
-        msg: "✅ Deployment successful! Application is available at http://localhost:8081"
-      when: health_check.status == 200
+        msg: "✅ Deployment successful! Application will be verified in next stage."
 
     - name: Log deployment to file
       lineinfile:
