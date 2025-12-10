@@ -49,12 +49,12 @@ pipeline {
                         sh """
                             mkdir -p src/assets
                             cat > src/assets/version.json << EOF
-                            {
-                              "version": "${version}",
-                              "buildNumber": "${buildNumber}",
-                              "buildTime": "${buildTime}"
-                            }
-                            EOF
+{
+  "version": "${version}",
+  "buildNumber": "${buildNumber}",
+  "buildTime": "${buildTime}"
+}
+EOF
                         """
 
                         sh 'NODE_OPTIONS="--max-old-space-size=2048" npm run build'
@@ -116,6 +116,7 @@ pipeline {
                 '''
             }
         }
+    }
 
     post {
         success {
