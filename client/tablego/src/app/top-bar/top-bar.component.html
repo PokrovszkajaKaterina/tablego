@@ -2,6 +2,7 @@
   <div class="redirect-link" (click)="navigateToHome()">
     <mat-icon>bolt</mat-icon>
     <span>TableGo</span>
+    <span class="version-badge" *ngIf="version">{{version}}</span>
   </div>
   <span class="spacer"></span>
   <ng-container *ngIf="!isLoggedIn()">
