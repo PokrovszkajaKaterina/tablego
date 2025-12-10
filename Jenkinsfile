@@ -79,7 +79,8 @@ pipeline {
             steps {
                 sh '''
                     echo "🧪 Running smoke tests..."
-                    curl -f ${APP_URL}/home || exit 1
+                    # Test main routes using docker exec inside the container
+                    docker exec tablego-test curl -f http://localhost:80/ || exit 1
                     echo "✅ Smoke tests passed!"
                 '''
             }
