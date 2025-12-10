@@ -69,8 +69,8 @@ pipeline {
                 sh '''
                     echo "🏥 Running health check..."
                     sleep 3
-                    curl -f ${APP_URL} || exit 1
-                    echo "✅ Application is healthy and responding!"
+                    docker exec tablego-test curl -f http://localhost:80 || exit 1
+                    echo "✅ Application is healthy!"
                 '''
             }
         }
