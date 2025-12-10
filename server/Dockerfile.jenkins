@@ -1,0 +1,19 @@
+FROM jenkins/jenkins:lts
+
+USER root
+
+# Install Docker CLI
+RUN apt-get update && \
+    apt-get install -y docker.io && \
+    apt-get clean
+
+# Install Ansible
+RUN apt-get update && \
+    apt-get install -y ansible && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Verify installations
+RUN docker --version && ansible --version
+
+USER root

@@ -1,0 +1,62 @@
+---
+- name: Deploy TableGo Angular Application to Test Environment
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    app_name: tablego
+    nginx_container: tablego-test
+    source_dir: "{{ playbook_dir }}/../../client/tablego/dist/my-first-project/browser"
+    nginx_config: "{{ playbook_dir }}/../nginx.conf"
+    deploy_timestamp: "{{ ansible_date_time.iso8601 }}"
+
+  tasks:
+    - name: Display deployment information
+      debug:
+        msg: "Deploying {{ app_name }} at {{ deploy_timestamp }}"
+
+    - name: Check if nginx container is running
+      shell: docker ps | grep {{ nginx_container }}
+      register: container_status
+      ignore_errors: yes
+
+    - name: Fail if container is not running
+      fail:
+        msg: "Nginx container {{ nginx_container }} is not running!"
+      when: container_status.rc != 0
+
+    - name: Remove old application files from nginx
+      shell: docker exec {{ nginx_container }} rm -rf /usr/share/nginx/html/*
+
+    - name: Copy built application files to nginx container
+      shell: docker cp {{ source_dir }}/. {{ nginx_container }}:/usr/share/nginx/html/
+
+    - name: Copy nginx configuration
+      shell: docker cp {{ nginx_config }} {{ nginx_container }}:/etc/nginx/conf.d/default.conf
+
+    - name: Reload nginx to apply new configuration
+      shell: docker exec {{ nginx_container }} nginx -s reload
+
+    - name: Wait for application to be ready
+      pause:
+        seconds: 3
+
+    - name: Verify application is accessible
+      uri:
+        url: http://localhost:8081
+        status_code: 200
+        timeout: 10
+      register: health_check
+
+    - name: Display deployment success message
+      debug:
+        msg: "✅ Deployment successful! Application is available at http://localhost:8081"
+      when: health_check.status == 200
+
+    - name: Log deployment to file
+      lineinfile:
+        path: /var/jenkins_home/deployment-log.txt
+        line: "{{ deploy_timestamp }} - Build #{{ lookup('env', 'BUILD_NUMBER') | default('manual', true) }} - SUCCESS"
+        create: yes
+      ignore_errors: yes

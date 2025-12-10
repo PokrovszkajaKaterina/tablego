@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   mongodb:
-    build:  # This will use your existing Dockerfile
+    build:
       context: .
       dockerfile: Dockerfile
     ports:
@@ -13,7 +13,9 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
     privileged: true
     user: root
     ports:
@@ -23,9 +25,12 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
 
+  tablego-test:
+    image: nginx:alpine
+    container_name: tablego-test
+    ports:
+      - "8081:80"
+
 volumes:
   mongo_data:
   jenkins_home:
-
-    # Username: admin
-    # Password: admin

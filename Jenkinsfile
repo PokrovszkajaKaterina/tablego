@@ -5,7 +5,18 @@ pipeline {
         nodejs 'NodeJS'
     }
 
+    environment {
+        APP_URL = 'http://localhost:8081'
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                echo "📥 Checking out code from Git..."
+                checkout scm
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 dir('client/tablego') {
@@ -14,10 +25,10 @@ pipeline {
             }
         }
 
-        stage('Lint') {
+        stage('Code Quality - Lint') {
             steps {
                 dir('client/tablego') {
-                    sh 'npm run lint || true'
+                    sh 'npx eslint src --ext .ts,.html || true'
                 }
             }
         }
@@ -38,30 +49,50 @@ pipeline {
             }
         }
 
-       stage('Deploy to Test') {
-           steps {
-               dir('client/tablego') {
-                   sh '''
-                       echo "Deploying to test environment..."
-                       # Remove all existing files
-                       docker exec tablego-test rm -rf /usr/share/nginx/html/*
-                       # Copy from browser subdirectory (Angular's output location)
-                       docker cp dist/my-first-project/browser/. tablego-test:/usr/share/nginx/html/
-                       # Verify deployment
-                       docker exec tablego-test ls -la /usr/share/nginx/html/
-                       echo "Deployment complete!"
-                   '''
-               }
-           }
-       }
+        stage('Security Scan') {
+            steps {
+                dir('client/tablego') {
+                    sh 'npm audit --audit-level=moderate || true'
+                }
+            }
+        }
+
+        stage('Deploy with Ansible') {
+            steps {
+                echo "🚀 Deploying with Ansible..."
+                sh 'ansible-playbook server/ansible/deploy.yml'
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                sh '''
+                    echo "🏥 Running health check..."
+                    sleep 3
+                    curl -f ${APP_URL} || exit 1
+                    echo "✅ Application is healthy and responding!"
+                '''
+            }
+        }
+
+        stage('Smoke Tests') {
+            steps {
+                sh '''
+                    echo "🧪 Running smoke tests..."
+                    curl -f ${APP_URL}/home || exit 1
+                    echo "✅ Smoke tests passed!"
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build succeeded! 🎉'
+            echo '✅ Build and deployment succeeded! 🎉'
+            echo "Access your app at: ${APP_URL}"
         }
         failure {
-            echo 'Build failed! ❌'
+            echo '❌ Build failed!'
         }
     }
 }
