@@ -11,3 +11,12 @@ app-root {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.version-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-weight: 500;
+  margin-left: 12px;
+}
