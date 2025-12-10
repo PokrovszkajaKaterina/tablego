@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { MatIcon } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
-import { User } from '../shared/model/User';
+import {firstValueFrom} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+
+interface VersionInfo {
+  version: string;
+  buildNumber: string;
+  buildTime: string;
+}
 
 @Component({
   selector: 'app-top-bar',
@@ -20,9 +27,22 @@ import { User } from '../shared/model/User';
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss'
 })
-export class TopBarComponent {
+export class TopBarComponent implements OnInit {
+  version = '';
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private http: HttpClient) {}
+
+  async ngOnInit() {
+    try {
+      const versionInfo = await firstValueFrom(
+        this.http.get<VersionInfo>('/assets/version.json')
+      );
+      this.version = `v${versionInfo.version}`;
+    } catch (error) {
+      console.error('Failed to load version info', error);
+      this.version = '';
+    }
+  }
 
   navigateToHome(): void {
     this.router.navigate(['/home']);

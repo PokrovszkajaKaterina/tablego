@@ -36,7 +36,29 @@ pipeline {
         stage('Build') {
             steps {
                 dir('client/tablego') {
-                    sh 'NODE_OPTIONS="--max-old-space-size=2048" npm run build'
+                    script {
+                        // Read version from package.json
+                        def packageJson = readJSON file: 'package.json'
+                        def version = packageJson.version
+                        def buildNumber = env.BUILD_NUMBER
+                        def buildTime = new Date().format("yyyy-MM-dd HH:mm:ss")
+
+                        echo "📦 Building version ${version} (Build #${buildNumber})"
+
+                        // Create version.json file in src/assets
+                        sh """
+                            mkdir -p src/assets
+                            cat > src/assets/version.json << EOF
+                            {
+                              "version": "${version}",
+                              "buildNumber": "${buildNumber}",
+                              "buildTime": "${buildTime}"
+                            }
+                            EOF
+                        """
+
+                        sh 'NODE_OPTIONS="--max-old-space-size=2048" npm run build'
+                    }
                 }
             }
         }
@@ -69,8 +91,13 @@ pipeline {
                 sh '''
                     echo "🏥 Running health check..."
                     sleep 3
-                    docker exec tablego-test curl -f http://localhost:80 || exit 1
-                    echo "✅ Application is healthy!"
+                    HTTP_CODE=$(docker exec tablego-test curl -sf -o /dev/null -w "%{http_code}" http://localhost:80)
+                    if [ "$HTTP_CODE" -eq 200 ]; then
+                        echo "✅ Application is healthy! (HTTP $HTTP_CODE)"
+                    else
+                        echo "❌ Health check failed! (HTTP $HTTP_CODE)"
+                        exit 1
+                    fi
                 '''
             }
         }
@@ -79,13 +106,16 @@ pipeline {
             steps {
                 sh '''
                     echo "🧪 Running smoke tests..."
-                    # Test main routes using docker exec inside the container
-                    docker exec tablego-test curl -f http://localhost:80/ || exit 1
-                    echo "✅ Smoke tests passed!"
+                    HTTP_CODE=$(docker exec tablego-test curl -sf -o /dev/null -w "%{http_code}" http://localhost:80/)
+                    if [ "$HTTP_CODE" -eq 200 ]; then
+                        echo "✅ Smoke tests passed! (HTTP $HTTP_CODE)"
+                    else
+                        echo "❌ Smoke tests failed! (HTTP $HTTP_CODE)"
+                        exit 1
+                    fi
                 '''
             }
         }
-    }
 
     post {
         success {
