@@ -2,7 +2,7 @@
 - name: Deploy TableGo Angular Application to Test Environment
   hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: yes
 
   vars:
     app_name: tablego
