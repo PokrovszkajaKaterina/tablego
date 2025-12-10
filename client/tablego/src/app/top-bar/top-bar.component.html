@@ -2,8 +2,8 @@
   <div class="redirect-link" (click)="navigateToHome()">
     <mat-icon>bolt</mat-icon>
     <span>TableGo</span>
-    <span class="version-badge" *ngIf="version">{{version}}</span>
   </div>
+  <span class="version-badge" *ngIf="version">{{version}}</span>
   <span class="spacer"></span>
   <ng-container *ngIf="!isLoggedIn()">
     <button mat-button routerLink="/login" style="margin-right: 8px;">
