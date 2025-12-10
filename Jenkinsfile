@@ -38,18 +38,22 @@ pipeline {
             }
         }
 
-        stage('Deploy to Test') {
-            steps {
-                dir('client/tablego') {
-                    sh '''
-                        echo "Deploying to test environment..."
-                        # Copy built files to nginx container
-                        docker cp dist/my-first-project/. tablego-test:/usr/share/nginx/html/
-                        echo "Deployment complete!"
-                    '''
-                }
-            }
-        }
+       stage('Deploy to Test') {
+           steps {
+               dir('client/tablego') {
+                   sh '''
+                       echo "Deploying to test environment..."
+                       # Remove all existing files
+                       docker exec tablego-test rm -rf /usr/share/nginx/html/*
+                       # Copy from browser subdirectory (Angular's output location)
+                       docker cp dist/my-first-project/browser/. tablego-test:/usr/share/nginx/html/
+                       # Verify deployment
+                       docker exec tablego-test ls -la /usr/share/nginx/html/
+                       echo "Deployment complete!"
+                   '''
+               }
+           }
+       }
     }
 
     post {
