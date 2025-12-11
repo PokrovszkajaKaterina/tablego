@@ -19,7 +19,7 @@
         msg: "Deploying {{ app_name }} at {{ deploy_timestamp }}"
 
     - name: Find nginx container name
-      shell: docker ps --format '{{.Names}}' | grep -E '(tablego-test|server-tablego-test)' | head -1
+      shell: "docker ps --format '{% raw %}{{.Names}}{% endraw %}' | grep -E '(tablego-test|server-tablego-test)' | head -1"
       register: nginx_container_result
       ignore_errors: yes
 
@@ -37,16 +37,16 @@
       when: nginx_container == ""
 
     - name: Remove old application files from nginx
-      shell: docker exec {{ nginx_container }} rm -rf /usr/share/nginx/html/*
+      shell: "docker exec {{ nginx_container }} rm -rf /usr/share/nginx/html/*"
 
     - name: Copy built application files to nginx container
-      shell: docker cp {{ source_dir }}/. {{ nginx_container }}:/usr/share/nginx/html/
+      shell: "docker cp {{ source_dir }}/. {{ nginx_container }}:/usr/share/nginx/html/"
 
     - name: Copy nginx configuration
-      shell: docker cp {{ nginx_config }} {{ nginx_container }}:/etc/nginx/conf.d/default.conf
+      shell: "docker cp {{ nginx_config }} {{ nginx_container }}:/etc/nginx/conf.d/default.conf"
 
     - name: Reload nginx to apply new configuration
-      shell: docker exec {{ nginx_container }} nginx -s reload
+      shell: "docker exec {{ nginx_container }} nginx -s reload"
 
     - name: Display deployment success message
       debug:
