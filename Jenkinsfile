@@ -78,7 +78,6 @@ pipeline {
             steps {
                 dir('client/tablego') {
                     script {
-                        // Read version from package.json
                         def packageJson = readJSON file: 'package.json'
                         def version = packageJson.version
                         def buildNumber = env.BUILD_NUMBER
@@ -86,17 +85,12 @@ pipeline {
 
                         echo "📦 Building version ${version} (Build #${buildNumber})"
 
-                        // Create version.json file in src/assets
-                        sh """
-                            mkdir -p src/assets
-                            cat > src/assets/version.json << EOF
-                            {
-                              "version": "${version}",
-                              "buildNumber": "${buildNumber}",
-                              "buildTime": "${buildTime}"
-                            }
-                            EOF
-                        """
+                        // Create version.json with proper JSON format
+                        writeJSON file: 'src/assets/version.json', json: [
+                            version: version,
+                            buildNumber: buildNumber,
+                            buildTime: buildTime
+                        ]
 
                         sh 'NODE_OPTIONS="--max-old-space-size=2048" npm run build -- --configuration=test'
                     }
