@@ -28,6 +28,36 @@ pipeline {
             }
         }
 
+        stage('Seed Test Database') {
+            steps {
+                echo "🌱 Seeding test database..."
+                sh '''
+                    docker cp server/data/user.json server-mongodb-1:/user.json
+                    docker cp server/data/restaurant.json server-mongodb-1:/restaurant.json
+
+                    docker exec server-mongodb-1 mongoimport \
+                        --username=admin \
+                        --password=password \
+                        --authenticationDatabase=admin \
+                        --db=tablego_db \
+                        --collection=users \
+                        --file=/user.json \
+                        --jsonArray \
+                        --mode=upsert
+
+                    docker exec server-mongodb-1 mongoimport \
+                        --username=admin \
+                        --password=password \
+                        --authenticationDatabase=admin \
+                        --db=tablego_db \
+                        --collection=restaurants \
+                        --file=/restaurant.json \
+                        --jsonArray \
+                        --mode=upsert
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 dir('client/tablego') {
