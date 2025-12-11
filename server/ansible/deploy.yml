@@ -6,7 +6,6 @@
 
   vars:
     app_name: tablego
-    nginx_container: tablego-test-1
     source_dir: "{{ playbook_dir }}/../../client/tablego/dist/my-first-project/browser"
     nginx_config: "{{ playbook_dir }}/../nginx.conf"
 
@@ -19,15 +18,23 @@
       debug:
         msg: "Deploying {{ app_name }} at {{ deploy_timestamp }}"
 
-    - name: Check if nginx container is running
-      shell: docker ps | grep {{ nginx_container }}
-      register: container_status
+    - name: Find nginx container name
+      shell: docker ps --format '{{.Names}}' | grep -E '(tablego-test|server-tablego-test)' | head -1
+      register: nginx_container_result
       ignore_errors: yes
+
+    - name: Set nginx container name
+      set_fact:
+        nginx_container: "{{ nginx_container_result.stdout }}"
+
+    - name: Display found container name
+      debug:
+        msg: "Found nginx container: {{ nginx_container }}"
 
     - name: Fail if container is not running
       fail:
-        msg: "Nginx container {{ nginx_container }} is not running!"
-      when: container_status.rc != 0
+        msg: "Nginx container not found! Make sure tablego-test container is running."
+      when: nginx_container == ""
 
     - name: Remove old application files from nginx
       shell: docker exec {{ nginx_container }} rm -rf /usr/share/nginx/html/*
