@@ -4,8 +4,13 @@ USER root
 
 # Install Docker CLI
 RUN apt-get update && \
-    apt-get install -y docker.io && \
+    apt-get install -y docker.io curl && \
     apt-get clean
+
+# Install Docker Compose V2
+RUN mkdir -p /usr/local/lib/docker/cli-plugins && \
+    curl -SL https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose && \
+    chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
 # Install Ansible
 RUN apt-get update && \
@@ -14,6 +19,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Verify installations
-RUN docker --version && ansible --version
+RUN docker --version && docker compose version && ansible --version
 
 USER root
