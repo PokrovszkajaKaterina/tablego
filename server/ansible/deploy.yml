@@ -6,7 +6,7 @@
 
   vars:
     app_name: tablego
-    nginx_container: tablego-test
+    nginx_container: tablego-test-1
     source_dir: "{{ playbook_dir }}/../../client/tablego/dist/my-first-project/browser"
     nginx_config: "{{ playbook_dir }}/../nginx.conf"
 
