@@ -6,6 +6,6 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'jenkins'
+  - job_name: 'cadvisor'
     static_configs:
-      - targets: ['jenkins:8080']
+      - targets: ['cadvisor:8080']
