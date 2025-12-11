@@ -26,11 +26,37 @@ services:
       - CORS_ORIGIN=http://localhost:8081
       - SESSION_SECRET=testsecret
       - PORT=5000
+    depends_on:
+      - mongodb
+    networks:
+      - tablego-network
+
+  tablego-test:
+    image: nginx:alpine
+    container_name: tablego-test
+    ports:
+      - "8081:80"
+    networks:
+      - tablego-network
+
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - tablego-network
 
 volumes:
   mongo_data:
+  jenkins_home:
 
 networks:
   tablego-network:

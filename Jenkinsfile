@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo "🐳 Starting backend services..."
                 dir('server') {
-                    sh 'docker compose up -d mongodb tablego-backend'
+                    sh 'docker compose up -d mongodb tablego-backend tablego-test'
                     sh 'sleep 5'
                     sh 'docker compose ps'
                 }
