@@ -126,7 +126,7 @@ pipeline {
                 sh '''
                     echo "🏥 Running health check..."
                     sleep 3
-                    HTTP_CODE=$(docker exec tablego-test curl -sf -o /dev/null -w "%{http_code}" http://localhost:80)
+                    HTTP_CODE=$(docker exec server-tablego-test-1 curl -sf -o /dev/null -w "%{http_code}" http://localhost:80)
                     if [ "$HTTP_CODE" -eq 200 ]; then
                         echo "✅ Application is healthy! (HTTP $HTTP_CODE)"
                     else
@@ -141,7 +141,7 @@ pipeline {
             steps {
                 sh '''
                     echo "🧪 Running smoke tests..."
-                    HTTP_CODE=$(docker exec tablego-test curl -sf -o /dev/null -w "%{http_code}" http://localhost:80/)
+                    HTTP_CODE=$(docker exec server-tablego-test-1 curl -sf -o /dev/null -w "%{http_code}" http://localhost:80/)
                     if [ "$HTTP_CODE" -eq 200 ]; then
                         echo "✅ Smoke tests passed! (HTTP $HTTP_CODE)"
                     else
