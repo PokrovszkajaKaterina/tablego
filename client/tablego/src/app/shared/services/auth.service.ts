@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { User } from '../model/User';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private apiUrl = environment.apiUrl;
   private userChangedSubject = new BehaviorSubject<User | null>(null);
   userChanged$ = this.userChangedSubject.asObservable();
 
@@ -25,7 +27,7 @@ export class AuthService {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    return this.http.post<User>('http://localhost:5000/app/login', body, {headers: headers, withCredentials: true})
+    return this.http.post<User>(`${this.apiUrl}/login`, body, {headers: headers, withCredentials: true})
       .pipe(
         tap((user: User) => {
           this.userChangedSubject.next(user);
@@ -46,22 +48,22 @@ export class AuthService {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    return this.http.post('http://localhost:5000/app/register', body, {headers: headers});
+    return this.http.post(`${this.apiUrl}/register`, body, {headers: headers});
   }
 
   logout() {
-    return this.http.post('http://localhost:5000/app/logout', {}, {withCredentials: true, responseType: 'text'})
+    return this.http.post(`${this.apiUrl}/logout`, {}, {withCredentials: true, responseType: 'text'})
       .pipe(
         tap(() => this.userChangedSubject.next(null))
       );
   }
 
   checkAuth() {
-    return this.http.get<boolean>('http://localhost:5000/app/checkAuth', {withCredentials: true});
+    return this.http.get<boolean>(`${this.apiUrl}/checkAuth`, {withCredentials: true});
   }
 
   getLoggedUserById() {
-    return this.http.get<User>(`http://localhost:5000/app/user/${this.userChanged$}`, {withCredentials: true});
+    return this.http.get<User>(`${this.apiUrl}/user/${this.userChanged$}`, {withCredentials: true});
   }
 
   isLoggedIn(): boolean {

@@ -2,61 +2,36 @@ version: '3.8'
 services:
   mongodb:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     ports:
-      - "27017:27017"
+      - "6000:27017"
     volumes:
       - mongo_data:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
+    networks:
+      - tablego-network
 
-  jenkins:
+  tablego-backend:
     build:
       context: .
-      dockerfile: Dockerfile.jenkins
-    privileged: true
-    user: root
+      dockerfile: Dockerfile.backend
     ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  tablego-test:
-    image: nginx:alpine
-    container_name: tablego-test
-    ports:
-      - "8081:80"
-
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana_data:/var/lib/grafana
+      - "5001:5000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_SECURITY_ADMIN_USER=admin
-    depends_on:
-      - prometheus
+      - NODE_ENV=test
+      - MONGODB_URI=mongodb://mongodb:27017/tablego_db
+      - CORS_ORIGIN=http://localhost:8081
+      - SESSION_SECRET=testsecret
+      - PORT=5000
+    networks:
+      - tablego-network
 
 volumes:
   mongo_data:
-  jenkins_home:
-  prometheus_data:
-  grafana_data:
+
+networks:
+  tablego-network:
+    driver: bridge

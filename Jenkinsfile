@@ -17,6 +17,18 @@ pipeline {
             }
         }
 
+        stage('Start Backend Services') {
+            steps {
+                echo "🐳 Starting backend services..."
+                dir('server') {
+                    sh 'docker-compose up -d mongodb tablego-backend'
+                    sh 'sleep 5'
+                    sh 'docker-compose ps'
+                    sh 'docker-compose logs tablego-backend'
+                }
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 dir('client/tablego') {
@@ -49,15 +61,15 @@ pipeline {
                         sh """
                             mkdir -p src/assets
                             cat > src/assets/version.json << EOF
-{
-  "version": "${version}",
-  "buildNumber": "${buildNumber}",
-  "buildTime": "${buildTime}"
-}
-EOF
+                            {
+                              "version": "${version}",
+                              "buildNumber": "${buildNumber}",
+                              "buildTime": "${buildTime}"
+                            }
+                            EOF
                         """
 
-                        sh 'NODE_OPTIONS="--max-old-space-size=2048" npm run build'
+                        sh 'NODE_OPTIONS="--max-old-space-size=2048" npm run build -- --configuration=test'
                     }
                 }
             }
@@ -122,6 +134,7 @@ EOF
         success {
             echo '✅ Build and deployment succeeded! 🎉'
             echo "Access your app at: ${APP_URL}"
+            echo "Backend API at: http://localhost:5001/app"
         }
         failure {
             echo '❌ Build failed!'
