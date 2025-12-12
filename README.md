@@ -152,3 +152,9 @@ Felhasználók beimportálása server/data/user.json fájlból
     - Trilead API
     - Variant Plugin
     - Workspace Cleanup Plugin
+  
+  - Grafana konfigurálása:
+    - Username: admin
+    - Password: admin
+    - Prometheus Data Source-ként hozzáadva (Home >> New Data Source >> Prometheus >> (Connection) Prometheus server URL: http://prometheus:9090 >> Save & Test)
+    - importált Dashboard: Dashboards >> New >> Import >> Id: 193 >> Load >> prometheus: (kiválasztjuk a korábban létrehozott Prometheus Data Source-t) >> Import
